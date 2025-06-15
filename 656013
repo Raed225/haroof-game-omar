@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تحدي الأسئلة مع عمر</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .question {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #2980b9;
+    }
+    .result {
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 تحدي الأسئلة مع عمر</h1>
+    <div id="quiz">
+      <div class="question" id="question">...</div>
+      <div class="options" id="options"></div>
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "ما هو عاصمة السعودية؟",
+        options: ["جدة", "الرياض", "الدمام"],
+        answer: 1
+      },
+      {
+        question: "كم عدد أيام الأسبوع؟",
+        options: ["5", "6", "7"],
+        answer: 2
+      },
+      {
+        question: "من هو مبتكر آيفون؟",
+        options: ["ستيف جوبز", "بيل غيتس", "مارك زوكربيرغ"],
+        answer: 0
+      }
+    ];
+
+    let current = 0;
+
+    function showQuestion() {
+      const q = quizData[current];
+      document.getElementById("question").innerText = q.question;
+      const optionsDiv = document.getElementById("options");
+      const resultDiv = document.getElementById("result");
+      optionsDiv.innerHTML = "";
+      resultDiv.innerText = "";
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          if (index === q.answer) {
+            resultDiv.innerText = "✅ إجابة صحيحة!";
+            resultDiv.style.color = "green";
+          } else {
+            resultDiv.innerText = "❌ خطأ، حاول مرة أخرى!";
+            resultDiv.style.color = "red";
+          }
+          setTimeout(() => {
+            current++;
+            if (current < quizData.length) {
+              showQuestion();
+            } else {
+              document.getElementById("quiz").innerHTML = "<h2>انتهى التحدي! ✅</h2>";
+            }
+          }, 1500);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
